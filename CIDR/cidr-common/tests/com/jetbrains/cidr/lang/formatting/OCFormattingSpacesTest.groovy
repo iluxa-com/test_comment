@@ -305,8 +305,12 @@ public class OCFormattingSpacesTest extends OCFormattingTestCase {
         |    auto f(T t)->decltype(t + g()){return t + g();}
         |};
         |int method(){
+        |    int Y[] = {};
         |    int X[] = {1, 3, 5, 6, 7, 87, 1213, 2};
         |    int W[][3] = {{1, 3, 5}, {6, 7, 8}};
+        |    [&](){};
+        |    [=](){};
+        |    [](){};
         |    auto la = [X, W](int i1, int i2)->bool mutable{return i1 < i2;}(1, 2);
         |}""".stripMargin());
 
@@ -318,8 +322,15 @@ public class OCFormattingSpacesTest extends OCFormattingTestCase {
         |    }
         |};
         |int method(){
+        |    int Y[]={};
         |    int X[]={1,3,5,6,7,87,1213,2};
         |    int W[][3]={{1,3,5},{6,7,8}};
+        |    [&](){
+        |    };
+        |    [=](){
+        |    };
+        |    [](){
+        |    };
         |    auto la=[X,W](int i1,int i2)->bool mutable{
         |        return i1<i2;
         |    }(1,2);
@@ -334,8 +345,15 @@ public class OCFormattingSpacesTest extends OCFormattingTestCase {
         |    }
         |};
         |int method (){
+        |    int Y[]={};
         |    int X[]={1,3,5,6,7,87,1213,2};
         |    int W[][3]={{1,3,5},{6,7,8}};
+        |    [&] (){
+        |    };
+        |    [=] (){
+        |    };
+        |    [] (){
+        |    };
         |    auto la=[X,W] (int i1,int i2)->bool mutable{
         |        return i1<i2;
         |    }(1,2);
@@ -350,8 +368,15 @@ public class OCFormattingSpacesTest extends OCFormattingTestCase {
         |    }
         |};
         |int method (){
+        |    int Y[]={};
         |    int X[]={1,3,5,6,7,87,1213,2};
         |    int W[][3]={{1,3,5},{6,7,8}};
+        |    [&] (){
+        |    };
+        |    [=] (){
+        |    };
+        |    [] (){
+        |    };
         |    auto la=[X,W] (int i1,int i2)->bool mutable{
         |        return i1<i2;
         |    } (1,2);
@@ -366,8 +391,15 @@ public class OCFormattingSpacesTest extends OCFormattingTestCase {
         |    }
         |};
         |int method (){
+        |    int Y[]={};
         |    int X[]={1,3,5,6,7,87,1213,2};
         |    int W[][3]={{1,3,5},{6,7,8}};
+        |    [&] (){
+        |    };
+        |    [=] (){
+        |    };
+        |    [] (){
+        |    };
         |    auto la=[X,W] (int i1,int i2) -> bool mutable{
         |        return i1<i2;
         |    } (1,2);
@@ -382,8 +414,15 @@ public class OCFormattingSpacesTest extends OCFormattingTestCase {
         |    }
         |};
         |int method (){
+        |    int Y[]={};
         |    int X[]={1,3,5,6,7,87,1213,2};
         |    int W[][3]={{1,3,5},{6,7,8}};
+        |    [&] (){
+        |    };
+        |    [=] (){
+        |    };
+        |    [] (){
+        |    };
         |    auto la=[X,W] ( int i1,int i2 ) -> bool mutable{
         |        return i1<i2;
         |    } (1,2);
@@ -398,8 +437,15 @@ public class OCFormattingSpacesTest extends OCFormattingTestCase {
         |    }
         |};
         |int method (){
+        |    int Y[]={};
         |    int X[]={1,3,5,6,7,87,1213,2};
         |    int W[][3]={{1,3,5},{6,7,8}};
+        |    [&] (){
+        |    };
+        |    [=] (){
+        |    };
+        |    [] (){
+        |    };
         |    auto la=[X,W] ( int i1,int i2 ) -> bool mutable{
         |        return i1<i2;
         |    } ( 1,2 );
@@ -414,8 +460,15 @@ public class OCFormattingSpacesTest extends OCFormattingTestCase {
         |    }
         |};
         |int method () {
+        |    int Y[]={};
         |    int X[]={1,3,5,6,7,87,1213,2};
         |    int W[][3]={{1,3,5},{6,7,8}};
+        |    [&] () {
+        |    };
+        |    [=] () {
+        |    };
+        |    [] () {
+        |    };
         |    auto la=[X,W] ( int i1,int i2 ) -> bool mutable {
         |        return i1<i2;
         |    } ( 1,2 );
@@ -430,13 +483,42 @@ public class OCFormattingSpacesTest extends OCFormattingTestCase {
         |    }
         |};
         |int method () {
+        |    int Y[]={};
         |    int X[]={ 1,3,5,6,7,87,1213,2 };
         |    int W[][3]={{ 1,3,5 },{ 6,7,8 }};
+        |    [ & ] () {
+        |    };
+        |    [ = ] () {
+        |    };
+        |    [] () {
+        |    };
         |    auto la=[ X,W ] ( int i1,int i2 ) -> bool mutable {
         |        return i1<i2;
         |    } ( 1,2 );
         |}""".stripMargin());
 
+    getCommonSettings().SPACE_WITHIN_EMPTY_ARRAY_INITIALIZER_BRACES = true;
+    assertFormat(
+      """template<class T> struct FooT{
+        |    char g ();
+        |    auto f ( T t ) -> decltype ( t+g ()) {
+        |        return t+g ();
+        |    }
+        |};
+        |int method () {
+        |    int Y[]={ };
+        |    int X[]={ 1,3,5,6,7,87,1213,2 };
+        |    int W[][3]={{ 1,3,5 },{ 6,7,8 }};
+        |    [ & ] () {
+        |    };
+        |    [ = ] () {
+        |    };
+        |    [ ] () {
+        |    };
+        |    auto la=[ X,W ] ( int i1,int i2 ) -> bool mutable {
+        |        return i1<i2;
+        |    } ( 1,2 );
+        |}""".stripMargin());
   }
 
   public void testCPPOperators() throws Exception {
@@ -2170,10 +2252,12 @@ public class OCFormattingSpacesTest extends OCFormattingTestCase {
         |void foo(){}
         |void foo(){{return ^{return;};}}
         |void *block = ^{};
+        |auto la = [](){};
         |int i[] = {};""".stripMargin());
 
     getOCSettings().KEEP_STRUCTURES_IN_ONE_LINE = true;
     getCommonSettings().KEEP_SIMPLE_METHODS_IN_ONE_LINE = true;
+    getCommonSettings().KEEP_SIMPLE_LAMBDAS_IN_ONE_LINE = true;
     getCommonSettings().KEEP_SIMPLE_BLOCKS_IN_ONE_LINE = true;
 
     getOCSettings().SPACE_BETWEEN_ADJACENT_BRACKETS = true;
@@ -2183,6 +2267,7 @@ public class OCFormattingSpacesTest extends OCFormattingTestCase {
         |void foo(){}
         |void foo(){{return ^{return;};}}
         |void*block=^{};
+        |auto la=[](){};
         |int i[]={};""".stripMargin());
 
     getCommonSettings().SPACE_WITHIN_BRACES = true;
@@ -2191,6 +2276,7 @@ public class OCFormattingSpacesTest extends OCFormattingTestCase {
         |void foo(){}
         |void foo(){ { return ^{ return; }; } }
         |void*block=^{};
+        |auto la=[](){};
         |int i[]={};""".stripMargin());
 
     getOCSettings().SPACE_BETWEEN_ADJACENT_BRACKETS = false;
@@ -2199,6 +2285,7 @@ public class OCFormattingSpacesTest extends OCFormattingTestCase {
         |void foo(){}
         |void foo(){{ return ^{ return; }; }}
         |void*block=^{};
+        |auto la=[](){};
         |int i[]={};""".stripMargin());
 
     getOCSettings().SPACE_WITHIN_EMPTY_BRACES = true;
@@ -2207,6 +2294,7 @@ public class OCFormattingSpacesTest extends OCFormattingTestCase {
         |void foo(){ }
         |void foo(){{ return ^{ return; }; }}
         |void*block=^{ };
+        |auto la=[](){ };
         |int i[]={};""".stripMargin());
 
     getCommonSettings().SPACE_WITHIN_EMPTY_ARRAY_INITIALIZER_BRACES = true;
@@ -2215,6 +2303,7 @@ public class OCFormattingSpacesTest extends OCFormattingTestCase {
         |void foo(){ }
         |void foo(){{ return ^{ return; }; }}
         |void*block=^{ };
+        |auto la=[ ](){ };
         |int i[]={ };""".stripMargin());
   }
 
